@@ -8,14 +8,14 @@ keystone.pre('render', middleware.flashMessages);
 
 // Import Route Controllers
 var routes = {
-	views: importRoutes('./views')
+  views: importRoutes('./views')
 };
 
 // Setup Route Bindings
 exports = module.exports = function(app) {
-	
-	// Views
-	app.get('/', routes.views.index);
-	
-	
+
+  // Views
+  app.get('/', routes.views.index);
+
+
 };
