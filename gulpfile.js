@@ -26,8 +26,17 @@ gulp.task('lint', () => {
 });
 
 // gulp watcher for lint
-gulp.task('watch:lint', () => {
-  gulp.watch(paths.src, ['lint']);
+gulp.task('watch:lint', function() {
+  const lintAndPrint = eslint();
+
+  lintAndPrint.pipe(eslint.formatEach());
+
+  return gulp.watch(paths.src, event => {
+    if (event.type !== 'deleted') {
+      gulp.src(event.path)
+        .pipe(lintAndPrint, { end: false });
+    }
+  });
 });
 
 gulp.task('watch:sass', () => {
