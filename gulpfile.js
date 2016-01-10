@@ -1,8 +1,8 @@
 const gulp = require('gulp');
 const eslint = require('gulp-eslint');
 const watch = require('gulp-watch');
-const shell = require('gulp-shell')
 const sass = require('gulp-sass');
+const nodemon = require('gulp-nodemon');
 
 const paths = {
   'src': [
@@ -49,7 +49,12 @@ gulp.task('sass', () => {
     .pipe(gulp.dest(paths.style.output));
 });
 
-gulp.task('runKeystone', shell.task('node keystone.js'));
+gulp.task('runKeystone', () => {
+  nodemon({
+    script: 'keystone.js',
+    ext: 'js html hbs'
+  });
+});
 
 gulp.task('watch', [
   'watch:sass',
