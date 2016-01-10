@@ -1,12 +1,16 @@
 const gulp = require('gulp');
-const jshint = require('gulp-jshint');
-const jshintReporter = require('jshint-stylish');
+const eslint = require('gulp-eslint');
 const watch = require('gulp-watch');
 const shell = require('gulp-shell')
 const sass = require('gulp-sass');
 
 const paths = {
-  'src':['./models/**/*.js','./routes/**/*.js', 'keystone.js', 'package.json'],
+  'src': [
+    './lib/**/*.js',
+    './models/**/*.js',
+    './routes/**/*.js',
+    'keystone.js'
+  ],
   'style': {
     all: './public/styles/**/*.scss',
     output: './public/styles/'
@@ -16,8 +20,9 @@ const paths = {
 // gulp lint
 gulp.task('lint', () => {
   gulp.src(paths.src)
-    .pipe(jshint())
-    .pipe(jshint.reporter(jshintReporter));
+    .pipe(eslint())
+    .pipe(eslint.format())
+    .pipe(eslint.failAfterError());
 });
 
 // gulp watcher for lint
