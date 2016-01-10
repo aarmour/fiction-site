@@ -1,56 +1,51 @@
-var _ = require('lodash');
+'use strict';
 
-
-/**
-  Initialises the standard view locals
-*/
-
-exports.initLocals = function(req, res, next) {
-
-  var locals = res.locals;
-
-  locals.navLinks = [
-    { label: 'Home',    key: 'home',    href: '/' }
-  ];
-
-  locals.user = req.user;
-
-  next();
-
-};
-
+const _ = require('lodash');
 
 /**
-  Fetches and clears the flashMessages before a view is rendered
-*/
-
-exports.flashMessages = function(req, res, next) {
-
-  var flashMessages = {
-    info: req.flash('info'),
-    success: req.flash('success'),
-    warning: req.flash('warning'),
-    error: req.flash('error')
-  };
-
-  res.locals.messages = _.any(flashMessages, function(msgs) { return msgs.length; }) ? flashMessages : false;
-
-  next();
-
-};
-
-
-/**
-  Prevents people from accessing protected pages when they're not signed in
+ * Initializes variables for all views.
  */
 
-exports.requireUser = function(req, res, next) {
+exports.initLocals = (request, response, next) => {
+  const locals = response.locals;
 
-  if (!req.user) {
-    req.flash('error', 'Please sign in to access this page.');
-    res.redirect('/keystone/signin');
+  locals.navLinks = [
+    { label: 'Home', key: 'home', href: '/' }
+  ];
+
+  locals.user = request.user;
+
+  next();
+};
+
+
+/**
+ * Fetches and clears the flashMessages before a view is rendered.
+ */
+
+exports.flashMessages = (request, response, next) => {
+  const flashMessages = {
+    info: request.flash('info'),
+    success: request.flash('success'),
+    warning: request.flash('warning'),
+    error: request.flash('error')
+  };
+
+  response.locals.messages = _.any(flashMessages, msgs => msgs.length) ? flashMessages : false;
+
+  next();
+};
+
+
+/**
+ * Prevents users from accessing protected pages when they're not signed in.
+ */
+
+exports.requireUser = (request, response, next) => {
+  if (!request.user) {
+    request.flash('error', 'Please sign in to access this page.');
+    response.redirect('/keystone/signin');
   } else {
     next();
   }
-
 };
