@@ -1,10 +1,10 @@
 'use strict';
 
-var keystone = require('keystone');
-var middleware = require('./middleware');
-var importRoutes = keystone.importer(__dirname);
+const keystone = require('keystone');
+const middleware = require('./middleware');
+const importRoutes = keystone.importer(__dirname);
 
-// Common Middleware
+// Common middleware
 keystone.pre('routes', middleware.initLocals);
 keystone.pre('render', middleware.flashMessages);
 
@@ -26,13 +26,13 @@ keystone.set('500', (error, request, response) => {
   response.err(error, title, message);
 });
 
-// Import Route Controllers
-var routes = {
+// Import route controllers
+const routes = {
   views: importRoutes('./views')
 };
 
-// Setup Route Bindings
-exports = module.exports = function(app) {
+// Configure route bindings
+exports = module.exports = app => {
 
   // Views
   app.get('/', routes.views.index);
