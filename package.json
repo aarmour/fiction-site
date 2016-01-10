@@ -27,7 +27,8 @@
     "npm": ">=3"
   },
   "scripts": {
-    "start": "node keystone.js"
+    "start": "gulp",
+    "lint": "gulp lint"
   },
   "main": "keystone.js",
   "config": {
