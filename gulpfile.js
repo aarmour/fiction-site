@@ -26,7 +26,7 @@ gulp.task('lint', () => {
 });
 
 // gulp watcher for lint
-gulp.task('watch:lint', function() {
+gulp.task('watch:lint', () => {
   const lintAndPrint = eslint();
 
   lintAndPrint.pipe(eslint.formatEach());
