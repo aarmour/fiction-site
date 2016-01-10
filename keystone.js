@@ -21,7 +21,7 @@ keystone.init({
     layoutsDir: 'templates/views/layouts',
     partialsDir: 'templates/views/partials',
     defaultLayout: 'default',
-    helpers: new require('./templates/views/helpers')(),
+    helpers: require('./templates/views/helpers')(),
     extname: '.hbs'
   }).engine,
 
@@ -45,6 +45,7 @@ keystone.set('locals', {
 
 keystone.set('routes', require('./routes'));
 
+/* eslint-disable camelcase */
 keystone.set('email locals', {
   logo_src: '/images/logo-email.gif',
   logo_width: 194,
@@ -59,13 +60,14 @@ keystone.set('email locals', {
     }
   }
 });
+/* eslint-enable camelcase */
 
 keystone.set('email rules', [{
   find: '/images/',
-  replace: (keystone.get('env') == 'production') ? 'http://www.your-server.com/images/' : 'http://localhost:3000/images/'
+  replace: (keystone.get('env') === 'production') ? 'http://www.your-server.com/images/' : 'http://localhost:3000/images/'
 }, {
   find: '/keystone/',
-  replace: (keystone.get('env') == 'production') ? 'http://www.your-server.com/keystone/' : 'http://localhost:3000/keystone/'
+  replace: (keystone.get('env') === 'production') ? 'http://www.your-server.com/keystone/' : 'http://localhost:3000/keystone/'
 }]);
 
 keystone.set('email tests', require('./routes/emails'));
