@@ -45,7 +45,9 @@ gulp.task('runKeystone', () => {
   nodemon({
     script: 'keystone.js',
     ext: 'js html hbs'
-  });
+  })
+    .on('start', ['watch'])
+    .on('change', ['watch']);
 });
 
 gulp.task('watch:lint', () => {
@@ -70,4 +72,4 @@ gulp.task('watch', [
   'watch:lint'
 ]);
 
-gulp.task('default', ['watch', 'runKeystone']);
+gulp.task('default', ['runKeystone']);
