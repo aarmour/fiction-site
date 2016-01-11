@@ -1,23 +1,33 @@
 const gulp = require('gulp');
+const tape = require('gulp-tape');
 const eslint = require('gulp-eslint');
-const watch = require('gulp-watch');
 const sass = require('gulp-sass');
+const watch = require('gulp-watch');
 const nodemon = require('gulp-nodemon');
 
 const paths = {
-  'src': [
+  src: [
     './lib/**/*.js',
     './models/**/*.js',
     './routes/**/*.js',
     'keystone.js'
   ],
-  'style': {
+  test: [
+    './lib/**/*.test.js',
+    './models/**/*.test.js',
+    './routes/**/*.test.js'
+  ],
+  style: {
     all: './public/styles/**/*.scss',
     output: './public/styles/'
   }
 };
 
-// gulp lint
+gulp.task('test', () => {
+  gulp.src(paths.test)
+    .pipe(tape());
+});
+
 gulp.task('lint', () => {
   gulp.src(paths.src)
     .pipe(eslint())
@@ -25,7 +35,19 @@ gulp.task('lint', () => {
     .pipe(eslint.failAfterError());
 });
 
-// gulp watcher for lint
+gulp.task('sass', () => {
+  gulp.src(paths.style.all)
+    .pipe(sass().on('error', sass.logError))
+    .pipe(gulp.dest(paths.style.output));
+});
+
+gulp.task('runKeystone', () => {
+  nodemon({
+    script: 'keystone.js',
+    ext: 'js html hbs'
+  });
+});
+
 gulp.task('watch:lint', () => {
   const lintAndPrint = eslint();
 
@@ -41,19 +63,6 @@ gulp.task('watch:lint', () => {
 
 gulp.task('watch:sass', () => {
   gulp.watch(paths.style.all, ['sass']);
-});
-
-gulp.task('sass', () => {
-  gulp.src(paths.style.all)
-    .pipe(sass().on('error', sass.logError))
-    .pipe(gulp.dest(paths.style.output));
-});
-
-gulp.task('runKeystone', () => {
-  nodemon({
-    script: 'keystone.js',
-    ext: 'js html hbs'
-  });
 });
 
 gulp.task('watch', [

@@ -20,7 +20,10 @@
     "gulp-eslint": "^1.1.1",
     "gulp-nodemon": "^2.0.6",
     "gulp-sass": "^2.0.4",
-    "gulp-watch": "^4.3.5"
+    "gulp-tape": "0.0.7",
+    "gulp-watch": "^4.3.5",
+    "sinon": "^1.17.2",
+    "tape": "^4.4.0"
   },
   "engines": {
     "node": ">=4",
