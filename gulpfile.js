@@ -7,16 +7,11 @@ const nodemon = require('gulp-nodemon');
 
 const paths = {
   src: [
-    './lib/**/*.js',
-    './models/**/*.js',
-    './routes/**/*.js',
+    './src/**/*.js',
+    '!./src/**/*.test.js',
     'keystone.js'
   ],
-  test: [
-    './lib/**/*.test.js',
-    './models/**/*.test.js',
-    './routes/**/*.test.js'
-  ],
+  test: ['./src/**/*.test.js'],
   style: {
     all: './public/styles/**/*.scss',
     output: './public/styles/'

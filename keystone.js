@@ -21,7 +21,7 @@ keystone.init({
     layoutsDir: 'templates/views/layouts',
     partialsDir: 'templates/views/partials',
     defaultLayout: 'default',
-    helpers: require('./templates/views/helpers')(),
+    helpers: require('./src/view-helpers')(),
     extname: '.hbs'
   }).engine,
 
@@ -34,7 +34,7 @@ keystone.init({
 
 });
 
-keystone.import('models');
+keystone.import('./src/models');
 
 keystone.set('locals', {
   _: require('lodash'),
@@ -43,7 +43,7 @@ keystone.set('locals', {
   editable: keystone.content.editable
 });
 
-keystone.set('routes', require('./routes'));
+keystone.set('routes', require('./src/routes'));
 
 /* eslint-disable camelcase */
 keystone.set('email locals', {
@@ -70,7 +70,7 @@ keystone.set('email rules', [{
   replace: (keystone.get('env') === 'production') ? 'http://www.your-server.com/keystone/' : 'http://localhost:3000/keystone/'
 }]);
 
-keystone.set('email tests', require('./routes/emails'));
+keystone.set('email tests', require('./src/routes/emails'));
 
 keystone.set('nav', {
   'users': 'users'
